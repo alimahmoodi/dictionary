@@ -1,0 +1,15 @@
+.TextArea {
+    display: block;
+    margin: 2rem auto;
+    width: 100%;
+    height: 12rem;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1.6rem;
+    font-family: "Roboto";
+}
+
+.TextAreaDiv {
+    position: relative;
+    margin: 2rem 2rem;
+}

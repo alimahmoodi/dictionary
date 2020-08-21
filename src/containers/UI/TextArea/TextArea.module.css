@@ -1,0 +1,30 @@
+.TextArea {
+    display: block;
+    margin: 2rem auto;
+    width: 100%;
+    height: 12rem;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1.6rem;
+    font-family: "Roboto";
+}
+.Bin {
+    width: 1.5rem;
+    height: 3rem;
+    position: absolute;
+    right: 5px;
+    top: 0;
+    cursor: pointer;
+}
+.Tick {
+    width: 1.5rem;
+    /* height: 2.7rem; */
+    position: absolute;
+    right: 5px;
+    top: 3.5rem;
+    cursor: pointer;
+}
+.TextAreaDiv {
+    position: relative;
+    margin: 2rem 0rem;
+}

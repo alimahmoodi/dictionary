@@ -1,0 +1,17 @@
+.Button {
+    /* display: inline-block; */
+    margin: 1rem;
+    font-family: "Roboto";
+    width: 16rem;
+    height: 5rem;
+    padding: 1rem;
+    color: white;
+    background-color: black;
+    border-radius: 5px;
+    font-size: 1.6rem;
+    outline: none;
+}
+.ButtonDiv {
+    display: flex;
+    justify-content: center;
+}

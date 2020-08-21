@@ -1,0 +1,8 @@
+.FormBuilder {
+    width: 85%;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    margin: auto;
+    margin-bottom: 10rem;
+    background-color: aliceblue;
+    padding: 5rem 0;
+}

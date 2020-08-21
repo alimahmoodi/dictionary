@@ -1,0 +1,16 @@
+.InputText {
+    width: 50%;
+    height: 5rem;
+    border: 1px solid gray;
+    padding: 10px;
+    display: block;
+    border-radius: 10px;
+    margin: auto;
+    outline: none;
+    font-family: "Roboto";
+    font-size: 1.7rem;
+    transition: all 0.2s;
+}
+.InputText:focus {
+    width: 55%;
+}

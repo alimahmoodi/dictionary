@@ -1,0 +1,15 @@
+.Select {
+    width: 20%;
+    height: 4rem;
+    font-family: "Roboto";
+    font-size: 1.7rem;
+    border-radius: 5px;
+    margin: 6rem 2rem;
+}
+.Select option {
+    height: 3rem;
+    font-size: 1.7rem;
+}
+.Select option:hover {
+    background-color: aqua;
+}
