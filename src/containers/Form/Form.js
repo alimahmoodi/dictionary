@@ -3,142 +3,164 @@ import InputText from "../UI/Inputs/InputText";
 import Box from "../MeanAndSentence/Box";
 import Aux from "../../hoc/Auxiliary/Auxiliary";
 import classes from "./Form.module.css";
-import axios from "axios";
+// import axios from "axios";
 
 class Form extends React.Component {
     state = {
-        //[numOfSentences , 'type of vocab' ,['value of sentence 1', ''value od sentence 2',..] ,'meaning of vocab']
-        boxspec: [],
-        vocab: ""
+        word: "",
+        results: [
+            // {
+            //     definition: "the act of making something (a product) from raw materials",
+            //     partOfSpeech: "noun",
+            //     examples: [
+            //         "He manufactured a popular cereal",
+            //         "this gland manufactures a specific substance only"
+            //     ]
+            // },
+            // {
+            //     definition: "the organized action of making of goods and services for sale",
+            //     partOfSpeech: "noun",
+            //     examples: ["this gland manufactures a specific substance only"]
+            // }
+        ]
     };
-    addBoxHandler = () => {
-        let oldBoxspec = [...this.state.boxspec];
-        oldBoxspec.push([0, "", [], ""]);
-        this.setState({
-            boxspec: oldBoxspec
-        });
-    };
+
     deleteBoxHandler = (e, BoxId) => {
-        let oldBoxspec = [...this.state.boxspec];
-        oldBoxspec.splice(BoxId, 1);
+        let oldBox = [...this.state.results];
+        oldBox.splice(BoxId, 1);
         this.setState({
-            boxspec: oldBoxspec
+            results: oldBox
         });
     };
 
-    addSentenceHandler = (e, BoxId) => {
+    addSentenceHandler = (e, boxId) => {
         e.preventDefault();
-        let oldNum = this.state.boxspec[BoxId][0];
-        let updatedNum = oldNum + 1;
-        let oldSentenceValue = this.state.boxspec[BoxId][2];
-        oldSentenceValue.push("");
-        let updatedBoxspec = [...this.state.boxspec];
-        updatedBoxspec[BoxId][0] = updatedNum;
-        updatedBoxspec[BoxId][2] = oldSentenceValue;
-
+        let copyOfResults = [...this.state.results];
+        let copyOfBox = { ...copyOfResults[boxId] };
+        let copyOfExamples = [...copyOfBox.examples];
+        copyOfExamples.push("");
+        copyOfResults[boxId].examples = copyOfExamples;
         this.setState({
-            boxspec: updatedBoxspec
+            results: copyOfResults
         });
     };
-    deleteSentenceHandler = (e, BoxId, sentenceId) => {
-        e.preventDefault();
-        let oldNum = this.state.boxspec[BoxId][0];
-        let oldSentenceValue = this.state.boxspec[BoxId][2];
-        oldSentenceValue.splice(sentenceId, 1);
-        let updatedNum = oldNum - 1;
-        let updatedBoxspec = [...this.state.boxspec];
 
-        updatedBoxspec[BoxId][0] = updatedNum;
-        updatedBoxspec[BoxId][2] = oldSentenceValue;
+    addBoxHandler = () => {
+        let copyOfResults = [...this.state.results];
+        let newBox = {
+            definition: "",
+            partOfSpeech: "noun",
+            examples: []
+        };
+        copyOfResults.push(newBox);
         this.setState({
-            boxspec: updatedBoxspec
+            results: copyOfResults
         });
     };
 
-    typeOfVocabHandler = (e, BoxId) => {
-        let updatedBoxspec = [...this.state.boxspec];
-        updatedBoxspec[BoxId][1] = e.target.value;
+    deleteExampleHandler = (exampleId, boxId) => {
+        let copyOfResults = [...this.state.results];
+        let copyOfBox = { ...copyOfResults[boxId] };
+        let copyOfExamples = [...copyOfBox.examples];
+        copyOfExamples.splice(exampleId, 1);
+        copyOfResults[boxId].examples = copyOfExamples;
         this.setState({
-            boxspec: updatedBoxspec
+            results: copyOfResults
         });
     };
 
-    valueOfTextAreaHandler = (e, BoxId, sentenceId) => {
-        let updatedBoxspec = [...this.state.boxspec];
-        updatedBoxspec[BoxId][2][sentenceId] = e.target.value;
+    typeOfVocabHandler = (e, boxId) => {
+        let copyOfResults = [...this.state.results];
+        let copyOfBox = { ...copyOfResults[boxId] };
+        copyOfBox.partOfSpeech = e.target.value;
+        copyOfResults[boxId] = copyOfBox;
         this.setState({
-            boxspec: updatedBoxspec
+            results: copyOfResults
         });
     };
 
-    valueOfMeaningHandler = (e, boxId) => {
-        let Meaning = this.state.boxspec[boxId][3];
-        Meaning = e.target.value;
-        let updatedBoxspec = [...this.state.boxspec];
-        updatedBoxspec[boxId][3] = Meaning;
+    exapleValueHandler = (e, exampleId, boxId) => {
+        let copyOfResults = [...this.state.results];
+        let copyOfBox = { ...copyOfResults[boxId] };
+        let copyOfExamples = [...copyOfBox.examples];
+        copyOfExamples[exampleId] = e.target.value;
+        copyOfResults[boxId].examples = copyOfExamples;
         this.setState({
-            boxspec: updatedBoxspec
+            results: copyOfResults
         });
     };
 
-    sendDataHandler = e => {
-        e.preventDefault();
-        let vocabulary = {};
-
-        vocabulary["vocab"] = this.state.vocab;
-        this.state.boxspec.forEach(box => {
-            let type = box[1];
-            let sentences = box[2];
-            let meaning = box[3];
-            let mean = "mean";
-
-            if (!(mean in vocabulary)) {
-                vocabulary[mean] = {};
-            }
-            if (!vocabulary[mean].hasOwnProperty(type)) {
-                console.log("nabood");
-                vocabulary[mean][type] = {};
-            }
-            if (vocabulary[mean].hasOwnProperty(type)) {
-                vocabulary[mean][type][meaning] = sentences;
-            }
-        });
-
-        axios.post("https://dictionary-react.firebaseio.com/vocab.json", vocabulary).then(res => {
-            console.log(res);
-        });
-    };
-
-    mainVocab = e => {
+    vocabHandler = e => {
         this.setState({
-            vocab: e.target.value
+            word: e.target.value
         });
     };
+
+    valueOfDefinitionHandler = (e, boxId) => {
+        let copyOfResults = [...this.state.results];
+        let copyOfBox = { ...copyOfResults[boxId] };
+        copyOfBox.definition = e.target.value;
+        copyOfResults[boxId] = copyOfBox;
+        this.setState({
+            results: copyOfResults
+        });
+    };
+
+    // sendDataHandler = e => {
+    //     e.preventDefault();
+    //     let vocabulary = {};
+
+    //     vocabulary["vocab"] = this.state.vocab;
+    //     this.state.boxspec.forEach(box => {
+    //         let type = box[1];
+    //         let sentences = box[2];
+    //         let meaning = box[3];
+    //         let mean = "mean";
+
+    //         if (!(mean in vocabulary)) {
+    //             vocabulary[mean] = {};
+    //         }
+    //         if (!vocabulary[mean].hasOwnProperty(type)) {
+    //             console.log("nabood");
+    //             vocabulary[mean][type] = {};
+    //         }
+    //         if (vocabulary[mean].hasOwnProperty(type)) {
+    //             vocabulary[mean][type][meaning] = sentences;
+    //         }
+    //     });
+
+    //     axios.post("https://dictionary-react.firebaseio.com/vocab.json", vocabulary).then(res => {
+    //         console.log(res);
+    //     });
+    // };
 
     render() {
         let boxes = [];
-        boxes = this.state.boxspec.map((item, i) => {
+        boxes = this.state.results.map((item, boxId) => {
             return (
                 <Box
-                    key={i}
-                    boxId={i}
-                    numOfSentence={item[0]}
+                    key={boxId}
+                    boxId={boxId}
+                    partOfSpeech={item.partOfSpeech}
+                    definition={item.definition}
+                    examples={item.examples}
                     addSentence={this.addSentenceHandler}
-                    deleteSentence={this.deleteSentenceHandler}
-                    typeOfVocab={this.typeOfVocabHandler}
-                    labelType={item[1]}
+                    onChangeOfExapleValue={(e, exampleId) =>
+                        this.exapleValueHandler(e, exampleId, boxId)
+                    }
+                    deleteExample={exampleId => this.deleteExampleHandler(exampleId, boxId)}
+                    valueOfExample={item.examples}
+                    onChangeTypeOfVocab={this.typeOfVocabHandler}
+                    labelType={item.partOfSpeech}
                     deleteBox={this.deleteBoxHandler}
-                    valueOfTextArea={this.valueOfTextAreaHandler}
-                    valueOfMeaning={this.valueOfMeaningHandler}
-                    valueOfMeaning2Way={item[3]}
-                    selectValue={item[1]}
+                    onValueOfDefinition={this.valueOfDefinitionHandler}
                 />
             );
         });
         return (
             <Aux>
                 <form>
-                    <InputText vocab={this.mainVocab} />
+                    <InputText onVocabChange={this.vocabHandler} />
                     {boxes}
                 </form>
                 <div className={classes.ButtonDiv}>

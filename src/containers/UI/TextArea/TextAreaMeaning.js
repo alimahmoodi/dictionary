@@ -6,8 +6,8 @@ const TextAreaMeaning = props => {
         <div className={classes.TextAreaDiv}>
             <textarea
                 className={classes.TextArea}
-                onChange={e => props.valueOfMeaning(e, props.boxId)}
-                value={props.valueOfMeaning2Way}
+                onChange={e => props.onValueOfDefinition(e, props.boxId)}
+                value={props.definition}
             ></textarea>
         </div>
     );

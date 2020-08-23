@@ -9,14 +9,14 @@ import Close from "../../svg/close.svg";
 
 class Box extends React.Component {
     render() {
-        let Sentences = [...Array(this.props.numOfSentence)].map((item, i) => {
+        let exampleSentence = this.props.examples.map((item, id) => {
             return (
                 <TextArea
-                    key={i}
-                    boxId={this.props.boxId}
-                    sentenceId={i}
-                    deleteSentence={this.props.deleteSentence}
-                    valueOfTextArea={this.props.valueOfTextArea}
+                    key={id}
+                    deleteExample={this.props.deleteExample}
+                    exampleId={id}
+                    onChangeOfExapleValue={this.props.onChangeOfExapleValue}
+                    valueOfExample={item}
                 />
             );
         });
@@ -30,19 +30,19 @@ class Box extends React.Component {
                     onClick={e => this.props.deleteBox(e, this.props.boxId)}
                 />
                 <Select
-                    typeOfVocab={this.props.typeOfVocab}
-                    selectId={this.props.boxId}
-                    selectValue={this.props.selectValue}
+                    onChangeTypeOfVocab={e => this.props.onChangeTypeOfVocab(e, this.props.boxId)}
+                    boxId={this.props.boxId}
+                    partOfSpeech={this.props.partOfSpeech}
                 />
                 <Meaning labelType={this.props.labelType}>
                     <TextAreaMeaning
                         boxId={this.props.boxId}
-                        valueOfMeaning={this.props.valueOfMeaning}
-                        valueOfMeaning2Way={this.props.valueOfMeaning2Way}
+                        onValueOfDefinition={this.props.onValueOfDefinition}
+                        definition={this.props.definition}
                     />
                 </Meaning>
                 <Sentence>
-                    {Sentences}
+                    {exampleSentence}
                     <button
                         className={classes.Button}
                         onClick={e => this.props.addSentence(e, this.props.boxId)}

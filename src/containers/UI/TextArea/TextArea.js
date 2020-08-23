@@ -6,7 +6,7 @@ const TextArea = props => {
     return (
         <div className={classes.TextAreaDiv}>
             <img
-                onClick={e => props.deleteSentence(e, props.boxId, props.sentenceId)}
+                onClick={() => props.deleteExample(props.exampleId)}
                 className={classes.Bin}
                 src={Bin}
                 alt="recyclebin"
@@ -14,7 +14,8 @@ const TextArea = props => {
 
             <textarea
                 className={classes.TextArea}
-                onChange={e => props.valueOfTextArea(e, props.boxId, props.sentenceId)}
+                onChange={e => props.onChangeOfExapleValue(e, props.exampleId)}
+                value={props.valueOfExample}
             ></textarea>
         </div>
     );

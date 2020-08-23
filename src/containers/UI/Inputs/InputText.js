@@ -8,7 +8,7 @@ const InputText = props => {
             type="text"
             name="vocab"
             placeholder="Vocab..."
-            onChange={e => props.vocab(e)}
+            onChange={e => props.onVocabChange(e)}
         ></input>
     );
 };
