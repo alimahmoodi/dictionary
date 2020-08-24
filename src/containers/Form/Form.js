@@ -3,26 +3,13 @@ import InputText from "../UI/Inputs/InputText";
 import Box from "../MeanAndSentence/Box";
 import Aux from "../../hoc/Auxiliary/Auxiliary";
 import classes from "./Form.module.css";
-// import axios from "axios";
-
+import axios from "axios";
+import Spinner from "../UI/spinner/spinner";
 class Form extends React.Component {
     state = {
         word: "",
-        results: [
-            // {
-            //     definition: "the act of making something (a product) from raw materials",
-            //     partOfSpeech: "noun",
-            //     examples: [
-            //         "He manufactured a popular cereal",
-            //         "this gland manufactures a specific substance only"
-            //     ]
-            // },
-            // {
-            //     definition: "the organized action of making of goods and services for sale",
-            //     partOfSpeech: "noun",
-            //     examples: ["this gland manufactures a specific substance only"]
-            // }
-        ]
+        results: [],
+        loading: false
     };
 
     deleteBoxHandler = (e, BoxId) => {
@@ -106,33 +93,17 @@ class Form extends React.Component {
         });
     };
 
-    // sendDataHandler = e => {
-    //     e.preventDefault();
-    //     let vocabulary = {};
-
-    //     vocabulary["vocab"] = this.state.vocab;
-    //     this.state.boxspec.forEach(box => {
-    //         let type = box[1];
-    //         let sentences = box[2];
-    //         let meaning = box[3];
-    //         let mean = "mean";
-
-    //         if (!(mean in vocabulary)) {
-    //             vocabulary[mean] = {};
-    //         }
-    //         if (!vocabulary[mean].hasOwnProperty(type)) {
-    //             console.log("nabood");
-    //             vocabulary[mean][type] = {};
-    //         }
-    //         if (vocabulary[mean].hasOwnProperty(type)) {
-    //             vocabulary[mean][type][meaning] = sentences;
-    //         }
-    //     });
-
-    //     axios.post("https://dictionary-react.firebaseio.com/vocab.json", vocabulary).then(res => {
-    //         console.log(res);
-    //     });
-    // };
+    sendDataHandler = e => {
+        e.preventDefault();
+        this.setState({
+            loading: true
+        });
+        axios.post("https://dictionary-react.firebaseio.com/vocab.json", this.state).then(res => {
+            this.setState({
+                loading: false
+            });
+        });
+    };
 
     render() {
         let boxes = [];
@@ -171,6 +142,7 @@ class Form extends React.Component {
                     <button className={classes.Button} onClick={this.sendDataHandler}>
                         submit form
                     </button>
+                    {this.state.loading ? <Spinner /> : null}
                 </div>
             </Aux>
         );
