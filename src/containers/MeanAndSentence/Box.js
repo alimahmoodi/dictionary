@@ -6,6 +6,8 @@ import TextArea from "../UI/TextArea/TextArea";
 import TextAreaMeaning from "../UI/TextArea/TextAreaMeaning";
 import Select from "../UI/Select/Select";
 import Close from "../../svg/close.svg";
+import Icon from "@material-ui/core/Icon";
+import { green } from "@material-ui/core/colors";
 
 class Box extends React.Component {
     render() {
@@ -23,12 +25,14 @@ class Box extends React.Component {
 
         return (
             <div className={classes.Box}>
-                <img
-                    src={Close}
-                    className={classes.Close}
-                    alt="recycleBin"
-                    onClick={e => this.props.deleteBox(e, this.props.boxId)}
-                />
+                {this.props.numOfBoxes > 1 && (
+                    <img
+                        src={Close}
+                        className={classes.Close}
+                        alt="recycleBin"
+                        onClick={e => this.props.deleteBox(e, this.props.boxId)}
+                    />
+                )}
                 <Select
                     onChangeTypeOfVocab={e => this.props.onChangeTypeOfVocab(e, this.props.boxId)}
                     boxId={this.props.boxId}
@@ -50,6 +54,16 @@ class Box extends React.Component {
                         Add Sentence
                     </button>
                 </Sentence>
+                {this.props.isLast && (
+                    <Icon
+                        color="secondary"
+                        style={{ fontSize: 40, color: green[500] }}
+                        onClick={this.props.addBox}
+                        className={classes.Circle}
+                    >
+                        add_circle
+                    </Icon>
+                )}
             </div>
         );
     }

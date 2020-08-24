@@ -5,20 +5,36 @@ import Aux from "../../hoc/Auxiliary/Auxiliary";
 import classes from "./Form.module.css";
 import axios from "axios";
 import Spinner from "../UI/spinner/spinner";
+
 class Form extends React.Component {
     state = {
         word: "",
-        results: [],
+        results: [
+            {
+                definition: "",
+                partOfSpeech: "",
+                examples: [],
+                isLast: true
+                // isFirst: true
+            }
+        ],
         loading: false
+        // lastBox: null
     };
 
     deleteBoxHandler = (e, BoxId) => {
-        let oldBox = [...this.state.results];
-        oldBox.splice(BoxId, 1);
+        let copyOfResults = [...this.state.results];
+        copyOfResults.splice(BoxId, 1);
+        console.log(copyOfResults);
+        const resultsLength = copyOfResults.length;
+        if (resultsLength > 0 && copyOfResults[resultsLength - 1].isLast === false) {
+            copyOfResults[resultsLength - 1].isLast = true;
+        }
         this.setState({
-            results: oldBox
+            results: copyOfResults
         });
     };
+    checkForLast = () => {};
 
     addSentenceHandler = (e, boxId) => {
         e.preventDefault();
@@ -34,10 +50,14 @@ class Form extends React.Component {
 
     addBoxHandler = () => {
         let copyOfResults = [...this.state.results];
+        copyOfResults.forEach(item => {
+            item.isLast = false;
+        });
         let newBox = {
             definition: "",
             partOfSpeech: "noun",
-            examples: []
+            examples: [],
+            isLast: true
         };
         copyOfResults.push(newBox);
         this.setState({
@@ -50,6 +70,7 @@ class Form extends React.Component {
         let copyOfBox = { ...copyOfResults[boxId] };
         let copyOfExamples = [...copyOfBox.examples];
         copyOfExamples.splice(exampleId, 1);
+
         copyOfResults[boxId].examples = copyOfExamples;
         this.setState({
             results: copyOfResults
@@ -107,6 +128,7 @@ class Form extends React.Component {
 
     render() {
         let boxes = [];
+
         boxes = this.state.results.map((item, boxId) => {
             return (
                 <Box
@@ -125,6 +147,9 @@ class Form extends React.Component {
                     labelType={item.partOfSpeech}
                     deleteBox={this.deleteBoxHandler}
                     onValueOfDefinition={this.valueOfDefinitionHandler}
+                    isLast={item.isLast}
+                    addBox={this.addBoxHandler}
+                    numOfBoxes={this.state.results.length}
                 />
             );
         });
@@ -135,10 +160,6 @@ class Form extends React.Component {
                     {boxes}
                 </form>
                 <div className={classes.ButtonDiv}>
-                    <button className={classes.Button} onClick={this.addBoxHandler}>
-                        Add another Box
-                    </button>
-
                     <button className={classes.Button} onClick={this.sendDataHandler}>
                         submit form
                     </button>

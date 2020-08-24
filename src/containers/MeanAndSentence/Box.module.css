@@ -1,10 +1,10 @@
 .Box {
     width: 95%;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
-    margin: 10rem auto;
+    margin: 2.5rem auto;
     display: flex;
     justify-content: space-between;
-    background-color: white;
+    background-color: aliceblue;
     position: relative;
 }
 .Close {
@@ -29,4 +29,16 @@
     border-radius: 5px;
     font-size: 1.6rem;
     outline: none;
+}
+.addCircle {
+    display: flex;
+    justify-content: center;
+}
+.Circle {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 1000;
 }
