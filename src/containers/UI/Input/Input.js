@@ -57,6 +57,8 @@ const Input = props => {
                 </select>
             );
             break;
+        default:
+            return (inputElement = <input></input>);
     }
     return (
         // <div className={classes.Input}>

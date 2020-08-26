@@ -1,5 +1,5 @@
 import React from "react";
-import InputText from "../UI/Inputs/InputText";
+// import InputText from "../UI/Inputs/InputText";
 import Box from "../MeanAndSentence/Box";
 import Aux from "../../hoc/Auxiliary/Auxiliary";
 import classes from "./Form.module.css";
