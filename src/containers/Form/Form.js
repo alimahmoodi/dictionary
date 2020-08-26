@@ -5,6 +5,7 @@ import Aux from "../../hoc/Auxiliary/Auxiliary";
 import classes from "./Form.module.css";
 import axios from "axios";
 import Spinner from "../UI/spinner/spinner";
+import Input from "../UI/Input/Input";
 
 class Form extends React.Component {
     state = {
@@ -156,7 +157,7 @@ class Form extends React.Component {
         return (
             <Aux>
                 <form>
-                    <InputText onVocabChange={this.vocabHandler} />
+                    <Input inputType="text-input" changed={this.vocabHandler} />
                     {boxes}
                 </form>
                 <div className={classes.ButtonDiv}>

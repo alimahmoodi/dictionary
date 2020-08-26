@@ -1,0 +1,60 @@
+.InputText {
+    width: 50%;
+    height: 5rem;
+    border: 1px solid gray;
+    padding: 10px;
+    display: block;
+    border-radius: 10px;
+    margin: auto;
+    outline: none;
+    font-family: "Roboto";
+    font-size: 1.7rem;
+    transition: all 0.2s;
+}
+.InputText:focus {
+    width: 55%;
+}
+
+.TextArea {
+    display: block;
+    width: 100%;
+    height: 12rem;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1.6rem;
+    font-family: "Roboto";
+}
+
+.TextAreaDiv {
+    position: relative;
+}
+
+.Bin {
+    width: 1.5rem;
+    height: 3rem;
+    position: absolute;
+    right: 5px;
+    top: 0;
+    cursor: pointer;
+}
+.Tick {
+    width: 1.5rem;
+    position: absolute;
+    right: 5px;
+    top: 3.5rem;
+    cursor: pointer;
+}
+
+.Select {
+    font-family: "Roboto";
+    font-size: 1.7rem;
+    border-radius: 5px;
+    width: 55%;
+}
+.Select option {
+    height: 3rem;
+    font-size: 1.7rem;
+}
+.Select option:hover {
+    background-color: aqua;
+}

@@ -1,6 +1,5 @@
 .TextArea {
     display: block;
-    margin: 2rem auto;
     width: 100%;
     height: 12rem;
     border-radius: 8px;
@@ -11,5 +10,5 @@
 
 .TextAreaDiv {
     position: relative;
-    margin: 2rem 2rem;
+    /* margin: 2rem 2rem; */
 }

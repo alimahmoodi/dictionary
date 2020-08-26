@@ -7,7 +7,6 @@ const select = props => {
             className={classes.Select}
             value={props.partOfSpeech}
         >
-            <option value="">select type of word</option>
             <option value="verb">verb</option>
             <option value="noun">noun</option>
             <option value="adjective">adjective</option>
