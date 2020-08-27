@@ -23,10 +23,12 @@
     padding: 10px;
     font-size: 1.6rem;
     font-family: "Roboto";
+    resize: none;
 }
 
 .TextAreaDiv {
     position: relative;
+    margin-bottom: 1rem;
 }
 
 .Bin {
@@ -49,7 +51,9 @@
     font-family: "Roboto";
     font-size: 1.7rem;
     border-radius: 5px;
-    width: 55%;
+    width: 80%;
+    height: 4rem;
+    margin-top: 1rem;
 }
 .Select option {
     height: 3rem;

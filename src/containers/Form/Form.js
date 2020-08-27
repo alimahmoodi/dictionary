@@ -16,11 +16,9 @@ class Form extends React.Component {
                 partOfSpeech: "",
                 examples: [],
                 isLast: true
-                // isFirst: true
             }
         ],
         loading: false
-        // lastBox: null
     };
 
     deleteBoxHandler = (e, BoxId) => {
@@ -120,11 +118,13 @@ class Form extends React.Component {
         this.setState({
             loading: true
         });
-        axios.post("https://dictionary-react.firebaseio.com/vocab.json", this.state).then(res => {
-            this.setState({
-                loading: false
+        axios
+            .post("https://dictionary-react.firebaseio.com/vocab.json", this.state.results)
+            .then(() => {
+                this.setState({
+                    loading: false
+                });
             });
-        });
     };
 
     render() {
@@ -162,9 +162,9 @@ class Form extends React.Component {
                 </form>
                 <div className={classes.ButtonDiv}>
                     <button className={classes.Button} onClick={this.sendDataHandler}>
-                        submit form
+                        <span>submit form</span>
+                        {this.state.loading ? <Spinner /> : null}
                     </button>
-                    {this.state.loading ? <Spinner /> : null}
                 </div>
             </Aux>
         );

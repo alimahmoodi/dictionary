@@ -1,17 +1,31 @@
 .Button {
-    /* display: inline-block; */
     margin: 1rem;
     font-family: "Roboto";
-    width: 16rem;
-    height: 5rem;
+    width: 30rem;
     padding: 1rem;
-    color: white;
-    background-color: black;
+    color: rgb(62, 158, 62);
+    background-color: white;
     border-radius: 5px;
     font-size: 1.6rem;
     outline: none;
+    border: none;
+    text-transform: capitalize;
+    font-weight: 200;
+    cursor: pointer;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Button:hover {
+    color: white;
+    background-color: rgb(62, 158, 62);
 }
 .ButtonDiv {
     display: flex;
     justify-content: center;
+}
+
+.Button span {
+    flex-basis: 60%;
 }

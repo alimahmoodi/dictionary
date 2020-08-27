@@ -1,7 +1,7 @@
 .Label {
     font-family: "Roboto";
-    font-weight: 900;
-    text-transform: uppercase;
+    font-weight: 200;
+    text-transform: capitalize;
     display: block;
     text-align: center;
 }

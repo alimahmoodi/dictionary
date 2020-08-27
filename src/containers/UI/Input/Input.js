@@ -22,6 +22,7 @@ const Input = props => {
                     onChange={e => props.changed(e, props.boxId)}
                     value={props.definition}
                     className={classes.TextArea}
+                    placeholder="Vocab Definition"
                 />
             );
             break;
@@ -39,6 +40,7 @@ const Input = props => {
                         className={classes.TextArea}
                         onChange={e => props.onChangeOfExapleValue(e, props.exampleId)}
                         value={props.valueOfExample}
+                        placeholder="Example"
                     ></textarea>
                 </div>
             );

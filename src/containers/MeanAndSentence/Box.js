@@ -25,14 +25,6 @@ class Box extends React.Component {
 
         return (
             <div className={classes.Box}>
-                {this.props.numOfBoxes > 1 && (
-                    <img
-                        src={Close}
-                        className={classes.Close}
-                        alt="recycleBin"
-                        onClick={e => this.props.deleteBox(e, this.props.boxId)}
-                    />
-                )}
                 <div className={classes.selectWrapper}>
                     <InputLabel>Select Type Of Word</InputLabel>
                     <Input
@@ -55,7 +47,7 @@ class Box extends React.Component {
                 <Sentence>
                     {exampleSentence}
                     <button
-                        className={classes.Button}
+                        className={classes.AddSentenceButton}
                         onClick={e => this.props.addSentence(e, this.props.boxId)}
                     >
                         Add Sentence
@@ -71,6 +63,17 @@ class Box extends React.Component {
                         add_circle
                     </Icon>
                 )}
+
+                <div className={classes.CloseHolder}>
+                    {this.props.numOfBoxes > 1 && (
+                        <img
+                            src={Close}
+                            className={classes.Close}
+                            alt="recycleBin"
+                            onClick={e => this.props.deleteBox(e, this.props.boxId)}
+                        />
+                    )}
+                </div>
             </div>
         );
     }
