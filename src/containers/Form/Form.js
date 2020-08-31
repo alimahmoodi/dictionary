@@ -1,11 +1,11 @@
 import React from "react";
 // import InputText from "../UI/Inputs/InputText";
-import Box from "../MeanAndSentence/Box";
+import Box from "../../components/MeanAndSentence/Box";
 import Aux from "../../hoc/Auxiliary/Auxiliary";
 import classes from "./Form.module.css";
 import axios from "axios";
-import Spinner from "../UI/spinner/spinner";
-import Input from "../UI/Input/Input";
+import Spinner from "../../components/UI/spinner/spinner";
+import Input from "../../components/UI/Input/Input";
 
 class Form extends React.Component {
     state = {
@@ -13,12 +13,13 @@ class Form extends React.Component {
         results: [
             {
                 definition: "",
-                partOfSpeech: "",
+                partOfSpeech: "noun",
                 examples: [],
                 isLast: true
             }
         ],
-        loading: false
+        loading: false,
+        error: null
     };
 
     deleteBoxHandler = (e, BoxId) => {
@@ -118,12 +119,33 @@ class Form extends React.Component {
         this.setState({
             loading: true
         });
+        let completeData = {
+            word: this.state.word
+        };
+        const data = this.state.results.map(item => {
+            return {
+                definition: item.definition,
+                examples: item.examples,
+                partOfSpeech: item.partOfSpeech
+            };
+        });
+
+        completeData.results = data;
+
         axios
-            .post("https://dictionary-react.firebaseio.com/vocab.json", this.state.results)
+            .post("https://dictionary-react.firebaseio.com/vocab.json", completeData)
             .then(() => {
+                let copyOfResults = [...this.state.results];
+                copyOfResults.splice(1, copyOfResults.length - 1);
+                copyOfResults[copyOfResults.length - 1].isLast = true;
                 this.setState({
-                    loading: false
+                    loading: false,
+                    word: "",
+                    results: copyOfResults
                 });
+            })
+            .catch(err => {
+                this.setState({ error: err.message, loading: false });
             });
     };
 
@@ -156,8 +178,14 @@ class Form extends React.Component {
         });
         return (
             <Aux>
+                {/* {this.state.error ? alert(this.state.error) : null} */}
                 <form>
-                    <Input inputType="text-input" changed={this.vocabHandler} />
+                    <Input
+                        inputType="text-input"
+                        changed={this.vocabHandler}
+                        placeholder="Vocab..."
+                        textInputValue={this.state.word}
+                    />
                     {boxes}
                 </form>
                 <div className={classes.ButtonDiv}>
