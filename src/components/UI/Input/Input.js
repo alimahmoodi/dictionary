@@ -8,11 +8,14 @@ const Input = props => {
         case "text-input":
             inputElement = (
                 <input
+                    ref={props.inputValueRef}
                     className={classes.InputText}
                     type="text"
                     name="vocab"
-                    placeholder="Vocab..."
+                    placeholder={props.placeholder}
                     onChange={e => props.changed(e)}
+                    value={props.textInputValue}
+                    autoComplete="off"
                 ></input>
             );
             break;

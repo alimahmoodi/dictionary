@@ -1,7 +1,7 @@
 .InputText {
-    width: 50%;
+    width: 40%;
     height: 5rem;
-    border: 1px solid gray;
+    border: none;
     padding: 10px;
     display: block;
     border-radius: 10px;
@@ -10,9 +10,18 @@
     font-family: "Roboto";
     font-size: 1.7rem;
     transition: all 0.2s;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    color: rgb(156, 156, 156);
+    font-weight: 100;
+    margin-top: 1rem;
 }
 .InputText:focus {
-    width: 55%;
+    width: 42%;
+    box-shadow: 0px 0px 4px 0px rgba(2, 176, 199, 0.479);
+}
+.InputText::placeholder {
+    color: rgb(197, 195, 195);
+    font-weight: 100;
 }
 
 .TextArea {
@@ -24,6 +33,18 @@
     font-size: 1.6rem;
     font-family: "Roboto";
     resize: none;
+    border: none;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    outline: none;
+    color: rgb(156, 156, 156);
+    font-weight: 100;
+}
+.TextArea::placeholder {
+    color: rgb(197, 195, 195);
+    font-weight: 100;
+}
+.TextArea:focus {
+    box-shadow: 0px 0px 4px 0px rgba(2, 176, 199, 0.479);
 }
 
 .TextAreaDiv {
@@ -54,11 +75,16 @@
     width: 80%;
     height: 4rem;
     margin-top: 1rem;
+    border: none;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    outline: none;
+    color: rgb(156, 156, 156);
+    font-weight: 100;
 }
 .Select option {
-    height: 3rem;
+    height: 3.5rem;
     font-size: 1.7rem;
-}
-.Select option:hover {
-    background-color: aqua;
+    color: rgb(156, 156, 156);
+    font-weight: 100;
+    display: block;
 }
