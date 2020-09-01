@@ -65,12 +65,7 @@ const Input = props => {
         default:
             return (inputElement = <input></input>);
     }
-    return (
-        // <div className={classes.Input}>
-        // <label className={classes.Label}>{props.label}</label>
-        inputElement
-        // </div>
-    );
+    return inputElement;
 };
 
 export default Input;

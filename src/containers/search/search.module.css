@@ -1,0 +1,11 @@
+.InputWrapper {
+    display: flex;
+    width: 60%;
+    justify-content: center;
+    margin: 0 auto;
+    align-items: center;
+}
+.SpinnerWrapper {
+    margin-left: -3rem;
+    margin-top: 1rem;
+}

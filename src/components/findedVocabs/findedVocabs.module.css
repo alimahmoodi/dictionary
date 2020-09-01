@@ -39,3 +39,11 @@
     display: flex;
     justify-content: center;
 }
+.NotFound {
+    margin: 1rem auto;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    font-weight: 300;
+    text-transform: capitalize;
+}

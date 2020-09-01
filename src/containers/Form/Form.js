@@ -178,14 +178,16 @@ class Form extends React.Component {
         });
         return (
             <Aux>
-                {/* {this.state.error ? alert(this.state.error) : null} */}
                 <form>
-                    <Input
-                        inputType="text-input"
-                        changed={this.vocabHandler}
-                        placeholder="Vocab..."
-                        textInputValue={this.state.word}
-                    />
+                    <div className={classes.InputContainer}>
+                        <Input
+                            inputType="text-input"
+                            changed={this.vocabHandler}
+                            placeholder="Vocab..."
+                            textInputValue={this.state.word}
+                        />
+                    </div>
+
                     {boxes}
                 </form>
                 <div className={classes.ButtonDiv}>

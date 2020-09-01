@@ -29,3 +29,8 @@
 .Button span {
     flex-basis: 60%;
 }
+
+.InputContainer {
+    display: flex;
+    justify-content: center;
+}
