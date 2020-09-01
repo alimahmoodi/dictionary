@@ -1,52 +1,95 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useEffect, Fragment, useReducer } from "react";
 import classes from "./findedVocabs.module.css";
+const ACTION = {
+    Set_Error_Message: "setErrorMessage",
+    Set_Loading_Status: "setLoadingStatus",
+    Set_Not_Found: "setNotFound",
+    Set_Enter_Something: "setEnterSomething",
+    Set_Vocab_Definitions_1: "setVocabDefinitions1",
+    Set_Vocab_Definitions_2: "setVocabDefinitions2"
+};
+const reducer = (state, action) => {
+    switch (action.type) {
+        case ACTION.Set_Error_Message:
+            return {
+                vocabDefinitions: [],
+                notFound: false,
+                enterSomeThing: false,
+                error: action.payload.errorMeesage,
+                loading: false
+            };
+        case ACTION.Set_Loading_Status:
+            return {
+                vocabDefinitions: [],
+                notFound: false,
+                enterSomeThing: false,
+                error: false,
+                loading: true
+            };
+        case ACTION.Set_Not_Found:
+            return {
+                vocabDefinitions: [],
+                notFound: true,
+                enterSomeThing: false,
+                error: false,
+                loading: false
+            };
+        case ACTION.Set_Enter_Something:
+            return {
+                vocabDefinitions: [],
+                notFound: false,
+                enterSomeThing: true,
+                error: false,
+                loading: false
+            };
+        case ACTION.Set_Vocab_Definitions_1:
+            return {
+                vocabDefinitions: [],
+                notFound: false,
+                enterSomeThing: false,
+                error: false,
+                loading: false
+            };
+        case ACTION.Set_Vocab_Definitions_2:
+            return {
+                vocabDefinitions: [...action.payload.data],
+                notFound: false,
+                enterSomeThing: false,
+                error: false,
+                loading: false
+            };
+    }
+};
 
 const FindedVocabs = props => {
-    const [vocabDefinitions, setvocabDefinitions] = useState([]);
-    const [notFound, setNotFound] = useState(false);
-    const [enterSomeThing, setEnterSomething] = useState(false);
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [state, dispatch] = useReducer(reducer, {
+        vocabDefinitions: [],
+        notFound: false,
+        enterSomeThing: false,
+        error: false,
+        loading: false
+    });
 
     useEffect(() => {
         let result = [];
         if (props.errorMessage) {
-            console.log("-1");
-            setvocabDefinitions([]);
-            setNotFound(false);
-            setEnterSomething(false);
-            setError(false);
-            setLoading(false);
-            setError(props.errorMessage);
+            dispatch({
+                type: ACTION.Set_Error_Message,
+                payload: { errorMeesage: props.errorMessage }
+            });
         } else if (props.loadingStatus) {
-            console.log("0");
-            setNotFound(false);
-            setEnterSomething(false);
-            setError(false);
-            setLoading(true);
+            dispatch({ type: ACTION.Set_Loading_Status });
         } else if (
             Object.keys(props.searchResponse).length === 0 &&
             props.Touched &&
             props.filled.length > 0
         ) {
-            console.log("1");
-            setvocabDefinitions([]);
-            setNotFound(true);
-            setEnterSomething(false);
-            setError(false);
+            dispatch({ type: ACTION.Set_Not_Found });
         } else if (Object.keys(props.searchResponse).length === 0 && props.filled.length === 0) {
-            console.log("2");
-            setvocabDefinitions([]);
-            setEnterSomething(true);
-            setNotFound(false);
-            setError(false);
+            dispatch({ type: ACTION.Set_Enter_Something });
         } else if (Object.keys(props.searchResponse).length > 0) {
-            console.log("3");
-            setNotFound(false);
-            setEnterSomething(false);
-            setError(false);
-            setLoading(false);
-            console.log(props.searchResponse);
+            dispatch({ type: ACTION.Set_Vocab_Definitions_1 });
+
             for (let id in props.searchResponse) {
                 const word = props.searchResponse[id].word;
                 const def = props.searchResponse[id].results.map((item, id) => {
@@ -72,7 +115,7 @@ const FindedVocabs = props => {
                         {def}
                     </div>
                 );
-                setvocabDefinitions(result);
+                dispatch({ type: ACTION.Set_Vocab_Definitions_2, payload: { data: result } });
             }
         }
     }, [
@@ -85,16 +128,16 @@ const FindedVocabs = props => {
     ]);
 
     let vocabFindedBox = null;
-    if (enterSomeThing) {
+    if (state.enterSomeThing) {
         vocabFindedBox = <p className={classes.NotFound}>enter what you want</p>;
-    } else if (notFound) {
+    } else if (state.notFound) {
         vocabFindedBox = <p className={classes.NotFound}>Vocab Not Found</p>;
-    } else if (error) {
+    } else if (state.error) {
         vocabFindedBox = <p className={classes.NotFound}>{props.errorMessage}</p>;
-    } else if (loading) {
+    } else if (state.loading) {
         vocabFindedBox = null;
     } else {
-        vocabFindedBox = vocabDefinitions;
+        vocabFindedBox = state.vocabDefinitions;
     }
 
     return vocabFindedBox;
