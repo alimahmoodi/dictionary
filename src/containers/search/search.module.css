@@ -1,11 +1,15 @@
 .InputWrapper {
     display: flex;
-    width: 60%;
+    width: 30%;
     justify-content: center;
     margin: 0 auto;
     align-items: center;
+    position: relative;
 }
 .SpinnerWrapper {
-    margin-left: -3rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate(-50%, 50%);
     margin-top: 1rem;
 }

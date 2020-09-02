@@ -31,6 +31,6 @@
 }
 
 .InputContainer {
-    display: flex;
-    justify-content: center;
+    margin: 0 auto;
+    width: 40%;
 }
