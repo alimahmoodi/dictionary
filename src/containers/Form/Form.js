@@ -1,5 +1,4 @@
 import React from "react";
-// import InputText from "../UI/Inputs/InputText";
 import Box from "../../components/MeanAndSentence/Box";
 import Aux from "../../hoc/Auxiliary/Auxiliary";
 import classes from "./Form.module.css";
@@ -114,6 +113,8 @@ class Form extends React.Component {
         });
     };
 
+    checkValidity = completeData => {};
+
     sendDataHandler = e => {
         e.preventDefault();
         this.setState({
@@ -132,12 +133,19 @@ class Form extends React.Component {
 
         completeData.results = data;
 
+        this.checkValidity(completeData);
+
         axios
             .post("https://dictionary-react.firebaseio.com/vocab.json", completeData)
             .then(() => {
                 let copyOfResults = [...this.state.results];
                 copyOfResults.splice(1, copyOfResults.length - 1);
                 copyOfResults[copyOfResults.length - 1].isLast = true;
+                copyOfResults[copyOfResults.length - 1].examples.splice(
+                    0,
+                    copyOfResults[copyOfResults.length - 1].examples.length
+                );
+                copyOfResults[copyOfResults.length - 1].definition = "";
                 this.setState({
                     loading: false,
                     word: "",

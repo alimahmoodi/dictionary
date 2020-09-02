@@ -85,7 +85,7 @@ const FindedVocabs = props => {
             props.filled.length > 0
         ) {
             dispatch({ type: ACTION.Set_Not_Found });
-        } else if (Object.keys(props.searchResponse).length === 0 && props.filled.length === 0) {
+        } else if (props.filled.length === 0) {
             dispatch({ type: ACTION.Set_Enter_Something });
         } else if (Object.keys(props.searchResponse).length > 0) {
             dispatch({ type: ACTION.Set_Vocab_Definitions_1 });
