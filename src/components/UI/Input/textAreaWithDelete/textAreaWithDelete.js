@@ -6,7 +6,7 @@ const textAreaWithDelete = props => {
     let textAreaWithDeleteClass = [classes.TextArea];
     if (
         (props.isValid === false && props.isTouched) ||
-        (props.overAllValidMessage === true && props.isValid === false)
+        (props.exampleOverAllSend === true && props.isValid === false)
     ) {
         textAreaWithDeleteClass.push(classes.Invalid);
     }

@@ -4,7 +4,7 @@ const textInput = props => {
     let inputTextClass = [classes.InputText];
     if (
         (props.wordIsTouched === true && props.wordIsValid === false) ||
-        (props.overAllValidMessage === true && props.wordIsValid === false)
+        (props.wordOverAllSend === true && props.wordIsValid === false)
     ) {
         inputTextClass.push(classes.Invalid);
     }

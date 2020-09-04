@@ -4,7 +4,7 @@ import Aux from "../../hoc/Auxiliary/Auxiliary";
 import classes from "./Form.module.css";
 import axios from "axios";
 import Spinner from "../../components/UI/spinner/spinner";
-import Input from "../../components/UI/Input/Input";
+import TextInput from "../../components/UI/Input/textInput/textInput";
 
 class Form extends React.Component {
     state = {
@@ -14,11 +14,18 @@ class Form extends React.Component {
                 definition: "",
                 partOfSpeech: "noun",
                 examples: [],
-                isLast: true
+                isLast: true,
+                definitionIsValid: false,
+                definitionIsTouched: false,
+                definitionsOverAllSend: false
             }
         ],
         loading: false,
-        error: null
+        error: null,
+        wordIsValid: false,
+        wordIsTouched: false,
+        overAllValid: false,
+        wordOverAllSend: false
     };
 
     deleteBoxHandler = (e, BoxId) => {
@@ -29,21 +36,10 @@ class Form extends React.Component {
         if (resultsLength > 0 && copyOfResults[resultsLength - 1].isLast === false) {
             copyOfResults[resultsLength - 1].isLast = true;
         }
+        const totalValidation = this.overallValidityCheck(copyOfResults);
         this.setState({
-            results: copyOfResults
-        });
-    };
-    checkForLast = () => {};
-
-    addSentenceHandler = (e, boxId) => {
-        e.preventDefault();
-        let copyOfResults = [...this.state.results];
-        let copyOfBox = { ...copyOfResults[boxId] };
-        let copyOfExamples = [...copyOfBox.examples];
-        copyOfExamples.push("");
-        copyOfResults[boxId].examples = copyOfExamples;
-        this.setState({
-            results: copyOfResults
+            results: copyOfResults,
+            overAllValid: totalValidation
         });
     };
 
@@ -56,11 +52,35 @@ class Form extends React.Component {
             definition: "",
             partOfSpeech: "noun",
             examples: [],
-            isLast: true
+            isLast: true,
+            definitionIsValid: false,
+            definitionIsTouched: false,
+            overAllSend: false
         };
         copyOfResults.push(newBox);
+        const totalValidation = this.overallValidityCheck(copyOfResults);
         this.setState({
-            results: copyOfResults
+            results: copyOfResults,
+            overAllValid: totalValidation
+        });
+    };
+
+    addExampleHandler = (e, boxId) => {
+        e.preventDefault();
+        let copyOfResults = [...this.state.results];
+        let copyOfBox = { ...copyOfResults[boxId] };
+        let copyOfExamples = [...copyOfBox.examples];
+        copyOfExamples.push({
+            expValue: "",
+            isValid: false,
+            isTouched: false,
+            exampleOverAllSend: false
+        });
+        copyOfResults[boxId].examples = copyOfExamples;
+        const totalValidation = this.overallValidityCheck(copyOfResults);
+        this.setState({
+            results: copyOfResults,
+            overAllValid: totalValidation
         });
     };
 
@@ -69,10 +89,11 @@ class Form extends React.Component {
         let copyOfBox = { ...copyOfResults[boxId] };
         let copyOfExamples = [...copyOfBox.examples];
         copyOfExamples.splice(exampleId, 1);
-
         copyOfResults[boxId].examples = copyOfExamples;
+        const totalValidation = this.overallValidityCheck(copyOfResults);
         this.setState({
-            results: copyOfResults
+            results: copyOfResults,
+            overAllValid: totalValidation
         });
     };
 
@@ -86,20 +107,22 @@ class Form extends React.Component {
         });
     };
 
-    exapleValueHandler = (e, exampleId, boxId) => {
+    valueOfExampleHandler = (e, exampleId, boxId) => {
         let copyOfResults = [...this.state.results];
         let copyOfBox = { ...copyOfResults[boxId] };
         let copyOfExamples = [...copyOfBox.examples];
-        copyOfExamples[exampleId] = e.target.value;
-        copyOfResults[boxId].examples = copyOfExamples;
-        this.setState({
-            results: copyOfResults
-        });
-    };
+        let editedExample = { ...copyOfExamples[exampleId] };
+        editedExample.expValue = e.target.value;
+        editedExample.isTouched = true;
 
-    vocabHandler = e => {
+        editedExample.isValid = editedExample.expValue.trim() === "" ? false : true;
+        copyOfResults[boxId].examples[exampleId] = editedExample;
+
+        const totalValidation = this.overallValidityCheck(copyOfResults);
+
         this.setState({
-            word: e.target.value
+            results: copyOfResults,
+            overAllValid: totalValidation
         });
     };
 
@@ -107,19 +130,66 @@ class Form extends React.Component {
         let copyOfResults = [...this.state.results];
         let copyOfBox = { ...copyOfResults[boxId] };
         copyOfBox.definition = e.target.value;
+        copyOfBox.definitionIsTouched = true;
+
+        copyOfBox.definitionIsValid = copyOfBox.definition.trim() === "" ? false : true;
         copyOfResults[boxId] = copyOfBox;
+        const totalValidation = this.overallValidityCheck(copyOfResults);
         this.setState({
-            results: copyOfResults
+            results: copyOfResults,
+            overAllValid: totalValidation
         });
     };
 
-    checkValidity = completeData => {};
+    vocabHandler = e => {
+        let copyOfResults = [...this.state.results];
+        const wordValidation = e.target.value.trim() === "" ? false : true;
+        let totalValidation = this.overallValidityCheck(copyOfResults, wordValidation);
+        totalValidation = totalValidation && wordValidation;
+        this.setState({
+            word: e.target.value,
+            wordIsTouched: true,
+            wordIsValid: wordValidation,
+            overAllValid: totalValidation
+        });
+    };
+
+    overallValidityCheck = (copyOfResults, wordValidation) => {
+        let valid = true;
+        if (wordValidation) {
+            valid = valid && wordValidation;
+        } else {
+            valid = valid && this.state.wordIsValid;
+        }
+
+        copyOfResults.forEach(item => {
+            if (item.definitionIsValid === false) {
+                valid = false;
+            }
+            item.examples.forEach(item => {
+                if (item.isValid === false) {
+                    valid = false;
+                }
+            });
+        });
+        return valid;
+    };
 
     sendDataHandler = e => {
         e.preventDefault();
-        this.setState({
-            loading: true
+        let copyOfResults = [...this.state.results];
+        copyOfResults.forEach(item => {
+            item.definitionsOverAllSend = true;
+            item.examples.forEach(item => {
+                item.exampleOverAllSend = true;
+            });
         });
+        this.setState({
+            loading: true,
+            overAllSend: false,
+            wordOverAllSend: copyOfResults
+        });
+
         let completeData = {
             word: this.state.word
         };
@@ -133,54 +203,77 @@ class Form extends React.Component {
 
         completeData.results = data;
 
-        this.checkValidity(completeData);
-
-        axios
-            .post("https://dictionary-react.firebaseio.com/vocab.json", completeData)
-            .then(() => {
-                let copyOfResults = [...this.state.results];
-                copyOfResults.splice(1, copyOfResults.length - 1);
-                copyOfResults[copyOfResults.length - 1].isLast = true;
-                copyOfResults[copyOfResults.length - 1].examples.splice(
-                    0,
-                    copyOfResults[copyOfResults.length - 1].examples.length
-                );
-                copyOfResults[copyOfResults.length - 1].definition = "";
-                this.setState({
-                    loading: false,
-                    word: "",
-                    results: copyOfResults
+        if (this.state.overAllValid) {
+            axios
+                .post("https://dictionary-react.firebaseio.com/vocab.json", completeData)
+                .then(() => {
+                    let copyOfResults = [...this.state.results];
+                    copyOfResults.splice(1, copyOfResults.length - 1);
+                    copyOfResults[copyOfResults.length - 1].isLast = true;
+                    copyOfResults[copyOfResults.length - 1].examples.splice(
+                        0,
+                        copyOfResults[copyOfResults.length - 1].examples.length
+                    );
+                    copyOfResults[0].definition = "";
+                    copyOfResults[0].definitionIsValid = false;
+                    copyOfResults[0].definitionIsTouched = false;
+                    copyOfResults[0].definitionsOverAllSend = false;
+                    this.setState({
+                        loading: false,
+                        word: "",
+                        results: copyOfResults,
+                        wordIsValid: false,
+                        wordIsTouched: false,
+                        overAllValid: false
+                    });
+                })
+                .catch(err => {
+                    this.setState({ error: err.message, loading: false });
                 });
-            })
-            .catch(err => {
-                this.setState({ error: err.message, loading: false });
+        } else {
+            let copyOfResults = [...this.state.results];
+            copyOfResults.forEach(item => {
+                item.definitionsOverAllSend = true;
+                item.examples.forEach(item => {
+                    item.exampleOverAllSend = true;
+                });
             });
+            this.setState({
+                loading: false,
+                wordOverAllSend: true,
+                results: copyOfResults
+            });
+        }
     };
 
     render() {
         let boxes = [];
-
         boxes = this.state.results.map((item, boxId) => {
             return (
                 <Box
                     key={boxId}
                     boxId={boxId}
-                    partOfSpeech={item.partOfSpeech}
-                    definition={item.definition}
+                    definitionIsValid={item.definitionIsValid}
+                    definitionIsTouched={item.definitionIsTouched}
+                    definitionOverAllSend={item.definitionsOverAllSend}
+                    overAllValid={this.state.overAllValid}
                     examples={item.examples}
-                    addSentence={this.addSentenceHandler}
-                    onChangeOfExapleValue={(e, exampleId) =>
-                        this.exapleValueHandler(e, exampleId, boxId)
-                    }
-                    deleteExample={exampleId => this.deleteExampleHandler(exampleId, boxId)}
-                    valueOfExample={item.examples}
-                    onChangeTypeOfVocab={this.typeOfVocabHandler}
+                    addSentence={this.addExampleHandler}
                     labelType={item.partOfSpeech}
-                    deleteBox={this.deleteBoxHandler}
-                    onValueOfDefinition={this.valueOfDefinitionHandler}
                     isLast={item.isLast}
+                    deleteExample={exampleId => this.deleteExampleHandler(exampleId, boxId)}
+                    deleteBox={this.deleteBoxHandler}
                     addBox={this.addBoxHandler}
                     numOfBoxes={this.state.results.length}
+                    partOfSpeech={item.partOfSpeech}
+                    definitionValue={item.definition}
+                    valueOfExample={item.examples}
+                    onChangeOfExapleValue={(e, exampleId) =>
+                        this.valueOfExampleHandler(e, exampleId, boxId)
+                    }
+                    onChangeTypeOfVocab={this.typeOfVocabHandler}
+                    onChangeOfDefinitionValue={this.valueOfDefinitionHandler}
+                    overAllSend={this.state.overAllSend}
                 />
             );
         });
@@ -188,11 +281,14 @@ class Form extends React.Component {
             <Aux>
                 <form>
                     <div className={classes.InputContainer}>
-                        <Input
-                            inputType="text-input"
-                            changed={this.vocabHandler}
+                        <TextInput
+                            wordIsTouched={this.state.wordIsTouched}
+                            wordIsValid={this.state.wordIsValid}
+                            onChangeOfTextInput={this.vocabHandler}
                             placeholder="Vocab..."
                             textInputValue={this.state.word}
+                            overAllValid={this.state.overAllValid}
+                            wordOverAllSend={this.state.wordOverAllSend}
                         />
                     </div>
 
@@ -204,6 +300,9 @@ class Form extends React.Component {
                         {this.state.loading ? <Spinner /> : null}
                     </button>
                 </div>
+                {this.state.overAllSend ? (
+                    <p className={classes.EmptyMessage}>fill empty inputs</p>
+                ) : null}
             </Aux>
         );
     }

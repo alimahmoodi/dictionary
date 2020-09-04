@@ -58,6 +58,8 @@ const reducer = (state, action) => {
                 error: false,
                 loading: false
             };
+        default:
+            return state;
     }
 };
 
@@ -102,7 +104,7 @@ const FindedVocabs = props => {
                                 item.examples.map((item, id) => {
                                     return (
                                         <p className={classes.Example} key={id}>
-                                            -{item}
+                                            -{item.expValue}
                                         </p>
                                     );
                                 })}

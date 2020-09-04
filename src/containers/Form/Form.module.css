@@ -34,3 +34,10 @@
     margin: 0 auto;
     width: 40%;
 }
+
+.EmptyMessage {
+    display: flex;
+    justify-content: center;
+    text-transform: capitalize;
+    color: rgb(240, 99, 99);
+}

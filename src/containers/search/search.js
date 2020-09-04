@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, Fragment } from "react";
-import Input from "../../components/UI/Input/Input";
+import TextInput from "../../components/UI/Input/textInput/textInput";
 import FindedVocabs from "../../components/findedVocabs/findedVocabs";
 import Spinner from "../../components/UI/spinner/spinner";
 import classes from "./search.module.css";
@@ -53,11 +53,11 @@ const Search = () => {
     return (
         <Fragment>
             <div className={classes.InputWrapper}>
-                <Input
+                <TextInput
                     inputValueRef={inputValueRef}
                     inputType="text-input"
                     placeholder="Search"
-                    changed={e => inputChangeHandler(e)}
+                    onChangeOfTextInput={e => inputChangeHandler(e)}
                     textInputValue={searchValue}
                 />
                 <div className={classes.SpinnerWrapper}>{loading ? <Spinner /> : null}</div>
