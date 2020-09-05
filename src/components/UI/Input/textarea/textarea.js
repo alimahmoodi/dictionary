@@ -4,8 +4,7 @@ const TextArea = props => {
     let textAreaClass = [classes.TextArea];
     if (
         (props.definitionIsValid === false && props.definitionIsTouched === true) ||
-        /*props.overAllSend*/ (props.definitionOverAllSend === true &&
-            props.definitionIsValid === false)
+        (props.definitionOverAllSend === true && props.definitionIsValid === false)
     ) {
         textAreaClass.push(classes.Invalid);
     }

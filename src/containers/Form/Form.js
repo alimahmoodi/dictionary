@@ -5,6 +5,7 @@ import classes from "./Form.module.css";
 import axios from "axios";
 import Spinner from "../../components/UI/spinner/spinner";
 import TextInput from "../../components/UI/Input/textInput/textInput";
+import Label from "../../components/UI/Label/InputLabel";
 
 class Form extends React.Component {
     state = {
@@ -25,7 +26,8 @@ class Form extends React.Component {
         wordIsValid: false,
         wordIsTouched: false,
         overAllValid: false,
-        wordOverAllSend: false
+        wordOverAllSend: false,
+        formOverAllSend: false
     };
 
     deleteBoxHandler = (e, BoxId) => {
@@ -187,7 +189,10 @@ class Form extends React.Component {
         this.setState({
             loading: true,
             overAllSend: false,
-            wordOverAllSend: copyOfResults
+            results: copyOfResults,
+            error: null,
+            formOverAllSend: false,
+            wordOverAllSend: false
         });
 
         let completeData = {
@@ -224,7 +229,8 @@ class Form extends React.Component {
                         results: copyOfResults,
                         wordIsValid: false,
                         wordIsTouched: false,
-                        overAllValid: false
+                        overAllValid: false,
+                        wordOverAllSend: false
                     });
                 })
                 .catch(err => {
@@ -241,7 +247,8 @@ class Form extends React.Component {
             this.setState({
                 loading: false,
                 wordOverAllSend: true,
-                results: copyOfResults
+                results: copyOfResults,
+                formOverAllSend: true
             });
         }
     };
@@ -277,15 +284,22 @@ class Form extends React.Component {
                 />
             );
         });
+
+        let errorMessage = this.state.formOverAllSend ? (
+            <p className={classes.EmptyMessage}>fill empty inputs</p>
+        ) : this.state.error ? (
+            <p className={classes.EmptyMessage}>{this.state.error}</p>
+        ) : null;
         return (
             <Aux>
                 <form>
                     <div className={classes.InputContainer}>
+                        <Label additionClass="Align">word:</Label>
                         <TextInput
                             wordIsTouched={this.state.wordIsTouched}
                             wordIsValid={this.state.wordIsValid}
                             onChangeOfTextInput={this.vocabHandler}
-                            placeholder="Vocab..."
+                            placeholder="Enter Word..."
                             textInputValue={this.state.word}
                             overAllValid={this.state.overAllValid}
                             wordOverAllSend={this.state.wordOverAllSend}
@@ -300,9 +314,7 @@ class Form extends React.Component {
                         {this.state.loading ? <Spinner /> : null}
                     </button>
                 </div>
-                {this.state.overAllSend ? (
-                    <p className={classes.EmptyMessage}>fill empty inputs</p>
-                ) : null}
+                {errorMessage}
             </Aux>
         );
     }
