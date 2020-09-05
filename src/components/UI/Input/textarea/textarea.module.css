@@ -12,6 +12,7 @@
     outline: none;
     color: rgb(156, 156, 156);
     font-weight: 100;
+    margin-top: 1rem;
 }
 .TextArea::placeholder {
     color: rgb(197, 195, 195);

@@ -17,16 +17,7 @@ const Toolbar = props => {
                             Enter By Me
                         </NavLink>
                     </li>
-                    <li>
-                        <NavLink
-                            exact
-                            to="/useapi"
-                            className={classes.NavLink}
-                            activeClassName={classes.active}
-                        >
-                            Use Api
-                        </NavLink>
-                    </li>
+
                     <li>
                         <NavLink
                             exact

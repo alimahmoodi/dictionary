@@ -5,3 +5,7 @@
     display: block;
     text-align: center;
 }
+.Align {
+    text-align: start;
+    margin-left: 5px;
+}
