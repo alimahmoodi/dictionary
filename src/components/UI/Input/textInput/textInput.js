@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./textInput.module.css";
-const textInput = props => {
+const textInput = (props) => {
     let inputTextClass = [classes.InputText];
     if (
         (props.wordIsTouched === true && props.wordIsValid === false) ||
@@ -13,10 +13,10 @@ const textInput = props => {
         <input
             ref={props.inputValueRef}
             className={inputTextClass.join(" ")}
-            type="text"
+            type={props.typeOfInput}
             name="vocab"
             placeholder={props.placeholder}
-            onChange={e => props.onChangeOfTextInput(e)}
+            onChange={(e) => props.onChangeOfTextInput(e)}
             value={props.textInputValue}
             autoComplete="off"
         ></input>

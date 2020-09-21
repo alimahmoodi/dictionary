@@ -6,6 +6,7 @@ import axios from "axios";
 import Spinner from "../../components/UI/spinner/spinner";
 import TextInput from "../../components/UI/Input/textInput/textInput";
 import Label from "../../components/UI/Label/InputLabel";
+import { connect } from "react-redux";
 
 class Form extends React.Component {
     state = {
@@ -18,8 +19,8 @@ class Form extends React.Component {
                 isLast: true,
                 definitionIsValid: false,
                 definitionIsTouched: false,
-                definitionsOverAllSend: false
-            }
+                definitionsOverAllSend: false,
+            },
         ],
         loading: false,
         error: null,
@@ -27,13 +28,12 @@ class Form extends React.Component {
         wordIsTouched: false,
         overAllValid: false,
         wordOverAllSend: false,
-        formOverAllSend: false
+        formOverAllSend: false,
     };
 
     deleteBoxHandler = (e, BoxId) => {
         let copyOfResults = [...this.state.results];
         copyOfResults.splice(BoxId, 1);
-        console.log(copyOfResults);
         const resultsLength = copyOfResults.length;
         if (resultsLength > 0 && copyOfResults[resultsLength - 1].isLast === false) {
             copyOfResults[resultsLength - 1].isLast = true;
@@ -41,13 +41,13 @@ class Form extends React.Component {
         const totalValidation = this.overallValidityCheck(copyOfResults);
         this.setState({
             results: copyOfResults,
-            overAllValid: totalValidation
+            overAllValid: totalValidation,
         });
     };
 
     addBoxHandler = () => {
         let copyOfResults = [...this.state.results];
-        copyOfResults.forEach(item => {
+        copyOfResults.forEach((item) => {
             item.isLast = false;
         });
         let newBox = {
@@ -57,13 +57,13 @@ class Form extends React.Component {
             isLast: true,
             definitionIsValid: false,
             definitionIsTouched: false,
-            overAllSend: false
+            overAllSend: false,
         };
         copyOfResults.push(newBox);
         const totalValidation = this.overallValidityCheck(copyOfResults);
         this.setState({
             results: copyOfResults,
-            overAllValid: totalValidation
+            overAllValid: totalValidation,
         });
     };
 
@@ -76,13 +76,13 @@ class Form extends React.Component {
             expValue: "",
             isValid: false,
             isTouched: false,
-            exampleOverAllSend: false
+            exampleOverAllSend: false,
         });
         copyOfResults[boxId].examples = copyOfExamples;
         const totalValidation = this.overallValidityCheck(copyOfResults);
         this.setState({
             results: copyOfResults,
-            overAllValid: totalValidation
+            overAllValid: totalValidation,
         });
     };
 
@@ -95,7 +95,7 @@ class Form extends React.Component {
         const totalValidation = this.overallValidityCheck(copyOfResults);
         this.setState({
             results: copyOfResults,
-            overAllValid: totalValidation
+            overAllValid: totalValidation,
         });
     };
 
@@ -105,7 +105,7 @@ class Form extends React.Component {
         copyOfBox.partOfSpeech = e.target.value;
         copyOfResults[boxId] = copyOfBox;
         this.setState({
-            results: copyOfResults
+            results: copyOfResults,
         });
     };
 
@@ -124,7 +124,7 @@ class Form extends React.Component {
 
         this.setState({
             results: copyOfResults,
-            overAllValid: totalValidation
+            overAllValid: totalValidation,
         });
     };
 
@@ -139,11 +139,11 @@ class Form extends React.Component {
         const totalValidation = this.overallValidityCheck(copyOfResults);
         this.setState({
             results: copyOfResults,
-            overAllValid: totalValidation
+            overAllValid: totalValidation,
         });
     };
 
-    vocabHandler = e => {
+    vocabHandler = (e) => {
         let copyOfResults = [...this.state.results];
         const wordValidation = e.target.value.trim() === "" ? false : true;
         let totalValidation = this.overallValidityCheck(copyOfResults, wordValidation);
@@ -152,7 +152,7 @@ class Form extends React.Component {
             word: e.target.value,
             wordIsTouched: true,
             wordIsValid: wordValidation,
-            overAllValid: totalValidation
+            overAllValid: totalValidation,
         });
     };
 
@@ -164,11 +164,11 @@ class Form extends React.Component {
             valid = valid && this.state.wordIsValid;
         }
 
-        copyOfResults.forEach(item => {
+        copyOfResults.forEach((item) => {
             if (item.definitionIsValid === false) {
                 valid = false;
             }
-            item.examples.forEach(item => {
+            item.examples.forEach((item) => {
                 if (item.isValid === false) {
                     valid = false;
                 }
@@ -177,12 +177,12 @@ class Form extends React.Component {
         return valid;
     };
 
-    sendDataHandler = e => {
+    sendDataHandler = (e) => {
         e.preventDefault();
         let copyOfResults = [...this.state.results];
-        copyOfResults.forEach(item => {
+        copyOfResults.forEach((item) => {
             item.definitionsOverAllSend = true;
-            item.examples.forEach(item => {
+            item.examples.forEach((item) => {
                 item.exampleOverAllSend = true;
             });
         });
@@ -192,17 +192,18 @@ class Form extends React.Component {
             results: copyOfResults,
             error: null,
             formOverAllSend: false,
-            wordOverAllSend: false
+            wordOverAllSend: false,
         });
 
         let completeData = {
-            word: this.state.word
+            word: this.state.word,
+            userId: this.props.userId,
         };
-        const data = this.state.results.map(item => {
+        const data = this.state.results.map((item) => {
             return {
                 definition: item.definition,
                 examples: item.examples,
-                partOfSpeech: item.partOfSpeech
+                partOfSpeech: item.partOfSpeech,
             };
         });
 
@@ -210,7 +211,10 @@ class Form extends React.Component {
 
         if (this.state.overAllValid) {
             axios
-                .post("https://dictionary-react.firebaseio.com/vocab.json", completeData)
+                .post(
+                    `https://dictionary-react.firebaseio.com/${this.props.userId}.json?auth=${this.props.token}`,
+                    completeData
+                )
                 .then(() => {
                     let copyOfResults = [...this.state.results];
                     copyOfResults.splice(1, copyOfResults.length - 1);
@@ -230,17 +234,18 @@ class Form extends React.Component {
                         wordIsValid: false,
                         wordIsTouched: false,
                         overAllValid: false,
-                        wordOverAllSend: false
+                        wordOverAllSend: false,
                     });
                 })
-                .catch(err => {
+                .catch((err) => {
+                    console.log(err);
                     this.setState({ error: err.message, loading: false });
                 });
         } else {
             let copyOfResults = [...this.state.results];
-            copyOfResults.forEach(item => {
+            copyOfResults.forEach((item) => {
                 item.definitionsOverAllSend = true;
-                item.examples.forEach(item => {
+                item.examples.forEach((item) => {
                     item.exampleOverAllSend = true;
                 });
             });
@@ -248,7 +253,7 @@ class Form extends React.Component {
                 loading: false,
                 wordOverAllSend: true,
                 results: copyOfResults,
-                formOverAllSend: true
+                formOverAllSend: true,
             });
         }
     };
@@ -268,7 +273,7 @@ class Form extends React.Component {
                     addSentence={this.addExampleHandler}
                     labelType={item.partOfSpeech}
                     isLast={item.isLast}
-                    deleteExample={exampleId => this.deleteExampleHandler(exampleId, boxId)}
+                    deleteExample={(exampleId) => this.deleteExampleHandler(exampleId, boxId)}
                     deleteBox={this.deleteBoxHandler}
                     addBox={this.addBoxHandler}
                     numOfBoxes={this.state.results.length}
@@ -303,6 +308,7 @@ class Form extends React.Component {
                             textInputValue={this.state.word}
                             overAllValid={this.state.overAllValid}
                             wordOverAllSend={this.state.wordOverAllSend}
+                            typeOfInput="text"
                         />
                     </div>
 
@@ -320,4 +326,11 @@ class Form extends React.Component {
     }
 }
 
-export default Form;
+const mapStateToProps = (state) => {
+    return {
+        userId: state.userId,
+        token: state.token,
+    };
+};
+
+export default connect(mapStateToProps)(Form);

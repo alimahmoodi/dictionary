@@ -1,0 +1,73 @@
+.AuthContainer {
+    width: 90%;
+    /* padding: 2rem; */
+    margin: 3rem auto;
+    /* box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2); */
+}
+.SubmitButton {
+    width: 15rem;
+    height: 4rem;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    border: none;
+    box-shadow: 0px 0px 7px 0px rgba(0, 178, 66, 0.5);
+    color: white;
+    background-color: #00b242;
+    display: block;
+    margin: 0 auto;
+    margin-top: 1.5rem;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Header {
+    font-weight: 300;
+    text-transform: capitalize;
+    color: #444;
+}
+.CreateAccount {
+    text-transform: capitalize;
+    font-weight: 200;
+    font-style: italic;
+    margin-top: 3rem;
+    color: #444;
+    display: flex;
+    justify-content: center;
+}
+.ErrorMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    color: white;
+    width: 100%;
+    padding: 1.5rem;
+    background-color: red;
+    border-radius: 1.5rem;
+    position: relative;
+}
+.Tick {
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    right: -3rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.Input {
+    position: relative;
+    margin-bottom: 2rem;
+}
+.Input label {
+    color: rgb(92, 91, 91);
+}
+
+.crossClose {
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+}

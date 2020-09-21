@@ -10,6 +10,7 @@ const selectInput = props => {
             <option value="verb">verb</option>
             <option value="noun">noun</option>
             <option value="adjective">adjective</option>
+            <option value="adverb">adverb</option>
         </select>
     );
 };

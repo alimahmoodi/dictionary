@@ -3,7 +3,10 @@ import TextInput from "../../components/UI/Input/textInput/textInput";
 import FindedVocabs from "../../components/findedVocabs/findedVocabs";
 import Spinner from "../../components/UI/spinner/spinner";
 import classes from "./search.module.css";
-const Search = () => {
+// import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import Axios from "axios";
+import { connect } from "react-redux";
+const Search = (props) => {
     const [searchValue, setSearchValue] = useState("");
     const [response, setResponse] = useState({});
     const [loading, setLoading] = useState(false);
@@ -19,34 +22,56 @@ const Search = () => {
                 setLoading(true);
                 setError(false);
                 let query =
-                    searchValue.length === 0 ? "" : `?orderBy="word"&equalTo="${searchValue}"`;
+                    searchValue.length === 0
+                        ? ""
+                        : "?auth=" + props.token + '&orderBy="word"&equalTo="' + searchValue + '"';
 
-                fetch("https://dictionary-react.firebaseio.com/vocab.json" + query)
-                    .then(response => {
-                        return response.json();
-                    })
-                    .then(res => {
+                Axios.get(`https://dictionary-react.firebaseio.com/${props.userId}.json` + query)
+                    .then((res) => {
+                        console.log(res);
                         setLoading(false);
-                        setResponse(res);
+                        setResponse(res.data);
                         setInputTouched(true);
                     })
-                    .catch(err => {
+                    .catch((err) => {
+                        console.log(err);
                         setLoading(false);
                         setError(err.message);
                     });
+
+                // fetch(`https://dictionary-react.firebaseio.com/${props.userId}.json` + query, {
+                //     method: "GET",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                // })
+                //     .then((response) => {
+                //         return response.json();
+                //     })
+                //     .then((res) => {
+                //         console.log(res);
+                //         setLoading(false);
+                //         setResponse(res);
+                //         setInputTouched(true);
+                //     })
+                //     .catch((err) => {
+                //         console.log(err);
+                //         setLoading(false);
+                //         setError(err.message);
+                //     });
             }
         }, 500);
         return () => {
             clearTimeout(timer);
         };
-    }, [searchValue, inputValueRef]);
+    }, [searchValue, inputValueRef, props.token, props.userId]);
     useEffect(() => {
         if (searchValue.length === 0) {
             setInputTouched(false);
         }
     }, [searchValue.length]);
 
-    const inputChangeHandler = e => {
+    const inputChangeHandler = (e) => {
         setSearchValue(e.target.value);
     };
 
@@ -57,7 +82,7 @@ const Search = () => {
                     inputValueRef={inputValueRef}
                     inputType="text-input"
                     placeholder="Search"
-                    onChangeOfTextInput={e => inputChangeHandler(e)}
+                    onChangeOfTextInput={(e) => inputChangeHandler(e)}
                     textInputValue={searchValue}
                 />
                 <div className={classes.SpinnerWrapper}>{loading ? <Spinner /> : null}</div>
@@ -74,4 +99,12 @@ const Search = () => {
     );
 };
 
-export default Search;
+const mapStateToProps = (state) => {
+    return {
+        token: state.token,
+        userId: state.userId,
+    };
+};
+
+export default connect(mapStateToProps)(Search);
+//(withErrorHandler(Search, Axios))

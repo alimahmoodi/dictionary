@@ -1,6 +1,5 @@
 .Wrapper {
     width: 50%;
-    /* height: 10rem; */
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     margin: 1.5rem auto;
@@ -40,7 +39,7 @@
     justify-content: center;
 }
 .NotFound {
-    margin: 1rem auto;
+    margin: 2rem auto;
     width: 60%;
     display: flex;
     justify-content: center;

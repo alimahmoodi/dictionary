@@ -11,6 +11,9 @@
     padding: 0;
     padding: 0 15%;
 }
+.NavigationItems > :last-child {
+    margin-left: auto;
+}
 .NavigationItems li {
     width: 13rem;
     display: flex;

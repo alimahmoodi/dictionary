@@ -1,12 +1,14 @@
 import React, { useEffect, Fragment, useReducer } from "react";
 import classes from "./findedVocabs.module.css";
+// import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+// import Axios from "axios";
 const ACTION = {
     Set_Error_Message: "setErrorMessage",
     Set_Loading_Status: "setLoadingStatus",
     Set_Not_Found: "setNotFound",
     Set_Enter_Something: "setEnterSomething",
     Set_Vocab_Definitions_1: "setVocabDefinitions1",
-    Set_Vocab_Definitions_2: "setVocabDefinitions2"
+    Set_Vocab_Definitions_2: "setVocabDefinitions2",
 };
 const reducer = (state, action) => {
     switch (action.type) {
@@ -16,7 +18,7 @@ const reducer = (state, action) => {
                 notFound: false,
                 enterSomeThing: false,
                 error: action.payload.errorMeesage,
-                loading: false
+                loading: false,
             };
         case ACTION.Set_Loading_Status:
             return {
@@ -24,7 +26,7 @@ const reducer = (state, action) => {
                 notFound: false,
                 enterSomeThing: false,
                 error: false,
-                loading: true
+                loading: true,
             };
         case ACTION.Set_Not_Found:
             return {
@@ -32,7 +34,7 @@ const reducer = (state, action) => {
                 notFound: true,
                 enterSomeThing: false,
                 error: false,
-                loading: false
+                loading: false,
             };
         case ACTION.Set_Enter_Something:
             return {
@@ -40,7 +42,7 @@ const reducer = (state, action) => {
                 notFound: false,
                 enterSomeThing: true,
                 error: false,
-                loading: false
+                loading: false,
             };
         case ACTION.Set_Vocab_Definitions_1:
             return {
@@ -48,7 +50,7 @@ const reducer = (state, action) => {
                 notFound: false,
                 enterSomeThing: false,
                 error: false,
-                loading: false
+                loading: false,
             };
         case ACTION.Set_Vocab_Definitions_2:
             return {
@@ -56,20 +58,20 @@ const reducer = (state, action) => {
                 notFound: false,
                 enterSomeThing: false,
                 error: false,
-                loading: false
+                loading: false,
             };
         default:
             return state;
     }
 };
 
-const FindedVocabs = props => {
+const FindedVocabs = (props) => {
     const [state, dispatch] = useReducer(reducer, {
         vocabDefinitions: [],
         notFound: false,
         enterSomeThing: false,
         error: false,
-        loading: false
+        loading: false,
     });
 
     useEffect(() => {
@@ -77,7 +79,7 @@ const FindedVocabs = props => {
         if (props.errorMessage) {
             dispatch({
                 type: ACTION.Set_Error_Message,
-                payload: { errorMeesage: props.errorMessage }
+                payload: { errorMeesage: props.errorMessage },
             });
         } else if (props.loadingStatus) {
             dispatch({ type: ACTION.Set_Loading_Status });
@@ -126,7 +128,7 @@ const FindedVocabs = props => {
         props.Touched,
         props.errorMessage,
         props.loading,
-        props.loadingStatus
+        props.loadingStatus,
     ]);
 
     let vocabFindedBox = null;
