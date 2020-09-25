@@ -68,12 +68,8 @@ export const verification = (token) => {
             requestType: "VERIFY_EMAIL",
             idToken: token,
         })
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+            .then((res) => {})
+            .catch((err) => {});
     };
 };
 
@@ -97,7 +93,6 @@ export const auth = (email, password, type) => {
         Axios.post(url, authData)
             .then((response) => {
                 const expireDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-                console.log(response);
                 localStorage.setItem("token", response.data.idToken);
                 localStorage.setItem("userId", response.data.localId);
                 localStorage.setItem("expireDate", expireDate);
@@ -109,13 +104,14 @@ export const auth = (email, password, type) => {
                 dispatch(redirect());
             })
             .catch((err) => {
-                console.log(err);
                 if (type === "signup") {
-                    console.log("signup");
-                    dispatch(authFailSignup(err.response.data.error.message));
+                    err.response
+                        ? dispatch(authFailSignup(err.response.data.error.message))
+                        : dispatch(authFailSignup(err.message));
                 } else {
-                    console.log("login");
-                    dispatch(authFailLogin(err.response.data.error.message));
+                    err.response
+                        ? dispatch(authFailLogin(err.response.data.error.message))
+                        : dispatch(authFailLogin(err.message));
                 }
             });
     };

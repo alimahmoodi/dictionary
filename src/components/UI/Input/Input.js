@@ -2,8 +2,7 @@ import React from "react";
 import classes from "./Input.module.css";
 import Bin from "../../../svg/bin.svg";
 
-const Input = props => {
-    console.log(props.wordIsValid);
+const Input = (props) => {
     let inputElement = null;
     let inputTextClass = [classes.InputText];
     let textAreaClass = [classes.TextArea];
@@ -26,7 +25,7 @@ const Input = props => {
                     type="text"
                     name="vocab"
                     placeholder={props.placeholder}
-                    onChange={e => props.onChangeOfTextInput(e)}
+                    onChange={(e) => props.onChangeOfTextInput(e)}
                     value={props.textInputValue}
                     autoComplete="off"
                 ></input>
@@ -35,7 +34,7 @@ const Input = props => {
         case "textarea":
             inputElement = (
                 <textarea
-                    onChange={e => props.onChangeOfDefinitionValue(e, props.boxId)}
+                    onChange={(e) => props.onChangeOfDefinitionValue(e, props.boxId)}
                     value={props.definitionValue}
                     className={textAreaClass.join(" ")}
                     placeholder="Vocab Definition"
@@ -54,7 +53,7 @@ const Input = props => {
 
                     <textarea
                         className={textAreaWithDeleteClass.join(" ")}
-                        onChange={e => props.onChangeOfExapleValue(e, props.exampleId)}
+                        onChange={(e) => props.onChangeOfExapleValue(e, props.exampleId)}
                         value={props.valueOfExample}
                         placeholder="Example"
                     ></textarea>
@@ -65,7 +64,7 @@ const Input = props => {
         case "select":
             inputElement = (
                 <select
-                    onChange={e => props.onChangeTypeOfVocab(e)}
+                    onChange={(e) => props.onChangeTypeOfVocab(e)}
                     className={classes.Select}
                     value={props.partOfSpeech}
                 >

@@ -5,7 +5,6 @@ import Aux from "../../hoc/Auxiliary/Auxiliary";
 const withErrorHandler = (WrappedComponent, axios) => {
     return (props) => {
         const [error, setError] = useState(null);
-        // console.log("with error", error);
 
         const reqInterceptor = axios.interceptors.request.use((req) => {
             setError(null);

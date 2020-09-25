@@ -28,13 +28,11 @@ const Search = (props) => {
 
                 Axios.get(`https://dictionary-react.firebaseio.com/${props.userId}.json` + query)
                     .then((res) => {
-                        console.log(res);
                         setLoading(false);
                         setResponse(res.data);
                         setInputTouched(true);
                     })
                     .catch((err) => {
-                        console.log(err);
                         setLoading(false);
                         setError(err.message);
                     });

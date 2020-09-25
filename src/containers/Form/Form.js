@@ -29,7 +29,26 @@ class Form extends React.Component {
         overAllValid: false,
         wordOverAllSend: false,
         formOverAllSend: false,
+        successfulSent: false,
     };
+
+    componentDidUpdate() {
+        if (this.state.successfulSent === true) {
+            setTimeout(() => {
+                this.setState({
+                    successfulSent: false,
+                });
+            }, 3000);
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.state.successfulSent === true) {
+            this.setState({
+                successfulSent: false,
+            });
+        }
+    }
 
     deleteBoxHandler = (e, BoxId) => {
         let copyOfResults = [...this.state.results];
@@ -235,11 +254,13 @@ class Form extends React.Component {
                         wordIsTouched: false,
                         overAllValid: false,
                         wordOverAllSend: false,
+                        successfulSent: true,
                     });
                 })
                 .catch((err) => {
-                    console.log(err);
-                    this.setState({ error: err.message, loading: false });
+                    err.response
+                        ? this.setState({ error: err.response.data.error, loading: false })
+                        : this.setState({ error: err.message, loading: false });
                 });
         } else {
             let copyOfResults = [...this.state.results];
@@ -295,6 +316,23 @@ class Form extends React.Component {
         ) : this.state.error ? (
             <p className={classes.EmptyMessage}>{this.state.error}</p>
         ) : null;
+
+        let succfSnt = this.state.successfulSent ? (
+            <p
+                style={{
+                    color: "white",
+                    backgroundColor: "green",
+                    padding: "10px",
+                    width: "200px",
+                    margin: "20px auto",
+                    borderRadius: "10px",
+                }}
+                className={classes.EmptyMessage}
+            >
+                successfully sent!
+            </p>
+        ) : null;
+
         return (
             <Aux>
                 <form>
@@ -321,6 +359,7 @@ class Form extends React.Component {
                     </button>
                 </div>
                 {errorMessage}
+                {succfSnt}
             </Aux>
         );
     }

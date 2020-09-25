@@ -80,18 +80,6 @@ const SignUp = (props) => {
                             wordIsValid={!passShort}
                             wordIsTouched={pass1Touched}
                         />
-                        {/* <img className={classes.Tick} src={tick} /> */}
-                    </div>
-                    <div className={classes.Input}>
-                        <label>Rewrite Password:</label>
-                        <TextInput
-                            placeholder="Rewrite PassWord"
-                            onChangeOfTextInput={(e) => onChangeOfPass2(e.target.value)}
-                            textInputValue={passValue2}
-                            wordIsTouched={pass2Touched}
-                            wordIsValid={isValid}
-                            typeOfInput="password"
-                        />
                         {passShort ? (
                             <div
                                 style={{
@@ -104,6 +92,19 @@ const SignUp = (props) => {
                                 password must at least 7 characters
                             </div>
                         ) : null}
+                        {/* <img className={classes.Tick} src={tick} /> */}
+                    </div>
+                    <div className={classes.Input}>
+                        <label>Rewrite Password:</label>
+                        <TextInput
+                            placeholder="Rewrite PassWord"
+                            onChangeOfTextInput={(e) => onChangeOfPass2(e.target.value)}
+                            textInputValue={passValue2}
+                            wordIsTouched={pass2Touched}
+                            wordIsValid={isValid}
+                            typeOfInput="password"
+                        />
+
                         {isValid ? <img className={classes.Tick} src={tick} /> : null}
                     </div>
 
