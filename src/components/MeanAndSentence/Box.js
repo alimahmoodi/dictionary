@@ -3,8 +3,9 @@ import classes from "./Box.module.css";
 import Meaning from "./Meaning/Meaning";
 import Sentence from "./Sentence/Sentence";
 import Close from "../../svg/close.svg";
-import Icon from "@material-ui/core/Icon";
 import { green } from "@material-ui/core/colors";
+
+import Icon from "@material-ui/core/Icon";
 import InputLabel from "../UI/Label/InputLabel";
 
 import SelectInput from "../UI/Input/selectInput/selectInput";
@@ -34,7 +35,7 @@ class Box extends React.Component {
                 <div className={classes.selectWrapper}>
                     <InputLabel>Select Type Of Word</InputLabel>
                     <SelectInput
-                        onChangeTypeOfVocab={e =>
+                        onChangeTypeOfVocab={(e) =>
                             this.props.onChangeTypeOfVocab(e, this.props.boxId)
                         }
                         boxId={this.props.boxId}
@@ -56,7 +57,7 @@ class Box extends React.Component {
                     {exampleSentence}
                     <button
                         className={classes.AddSentenceButton}
-                        onClick={e => this.props.addSentence(e, this.props.boxId)}
+                        onClick={(e) => this.props.addSentence(e, this.props.boxId)}
                     >
                         Add Example Sentence
                     </button>
@@ -78,7 +79,7 @@ class Box extends React.Component {
                             src={Close}
                             className={classes.Close}
                             alt="recycleBin"
-                            onClick={e => this.props.deleteBox(e, this.props.boxId)}
+                            onClick={(e) => this.props.deleteBox(e, this.props.boxId)}
                         />
                     )}
                 </div>
