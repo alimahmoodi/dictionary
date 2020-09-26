@@ -12,7 +12,7 @@ const store = createStore(reducer, composeEnahncer(applyMiddleware(thunk)));
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router>
+        <Router basename="/dictionary/">
             <App />
         </Router>
     </Provider>,
