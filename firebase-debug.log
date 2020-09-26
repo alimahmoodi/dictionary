@@ -1,60 +1,13 @@
-[debug] [2020-09-25T19:50:58.105Z] ----------------------------------------------------------------------
-[debug] [2020-09-25T19:50:58.109Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Ali\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js projects:list
-[debug] [2020-09-25T19:50:58.109Z] CLI Version:   8.11.2
-[debug] [2020-09-25T19:50:58.109Z] Platform:      win32
-[debug] [2020-09-25T19:50:58.109Z] Node Version:  v12.18.3
-[debug] [2020-09-25T19:50:58.110Z] Time:          Fri Sep 25 2020 23:20:58 GMT+0330 (Iran Standard Time)
-[debug] [2020-09-25T19:50:58.110Z] ----------------------------------------------------------------------
-[debug] [2020-09-25T19:50:58.110Z] 
-[debug] [2020-09-25T19:50:58.120Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2020-09-25T19:50:58.120Z] > authorizing via signed-in user
-[debug] [2020-09-25T19:50:58.127Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2020-09-25T19:50:58.128Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
- <request body omitted>
-[debug] [2020-09-25T19:50:58.770Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 25 Sep 2020 19:50:58 GMT","server":"scaffolding on HTTPServer2","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
-[debug] [2020-09-25T19:50:58.832Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects?pageSize=1000  
- 
-[debug] [2020-09-25T19:50:59.779Z] <<< HTTP RESPONSE 403 {"content-type":"text/html; charset=UTF-8","referrer-policy":"no-referrer","content-length":"1595","date":"Fri, 25 Sep 2020 19:50:59 GMT","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""}
-[debug] [2020-09-25T19:50:59.779Z] <<< HTTP RESPONSE BODY <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 403 (Forbidden)!!1</title>
-  <style>
-    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}
-  </style>
-  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>
-  <p><b>403.</b> <ins>That’s an error.</ins>
-  <p>Your client does not have permission to get URL <code>/v1beta1/projects</code> from this server.  <ins>That’s all we know.</ins>
-
-[debug] [2020-09-25T19:50:59.780Z] HTTP Error: 403, Unknown Error
-[debug] [2020-09-25T19:51:00.717Z] FirebaseError: HTTP Error: 403, Unknown Error
-    at module.exports (C:\Users\Ali\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:38:12)
-    at Request._callback (C:\Users\Ali\AppData\Roaming\npm\node_modules\firebase-tools\lib\api.js:41:35)
-    at Request.self.callback (C:\Users\Ali\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:185:22)
-    at Request.emit (events.js:315:20)
-    at Request.EventEmitter.emit (domain.js:483:12)
-    at Request.<anonymous> (C:\Users\Ali\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1154:10)
-    at Request.emit (events.js:315:20)
-    at Request.EventEmitter.emit (domain.js:483:12)
-    at IncomingMessage.<anonymous> (C:\Users\Ali\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1076:12)
-    at Object.onceWrapper (events.js:421:28)
-    at IncomingMessage.emit (events.js:327:22)
-    at IncomingMessage.EventEmitter.emit (domain.js:483:12)
-    at endReadableNT (_stream_readable.js:1220:12)
-    at processTicksAndRejections (internal/process/task_queues.js:84:21)
-[error] 
-[error] Error: Failed to list Firebase projects. See firebase-debug.log for more info.
-[debug] [2020-09-25T19:51:39.479Z] ----------------------------------------------------------------------
-[debug] [2020-09-25T19:51:39.482Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Ali\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
-[debug] [2020-09-25T19:51:39.482Z] CLI Version:   8.11.2
-[debug] [2020-09-25T19:51:39.482Z] Platform:      win32
-[debug] [2020-09-25T19:51:39.482Z] Node Version:  v12.18.3
-[debug] [2020-09-25T19:51:39.483Z] Time:          Fri Sep 25 2020 23:21:39 GMT+0330 (Iran Standard Time)
-[debug] [2020-09-25T19:51:39.483Z] ----------------------------------------------------------------------
-[debug] [2020-09-25T19:51:39.483Z] 
-[debug] [2020-09-25T19:51:39.493Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2020-09-25T19:51:39.493Z] > authorizing via signed-in user
+[debug] [2020-09-26T09:37:59.395Z] ----------------------------------------------------------------------
+[debug] [2020-09-26T09:37:59.398Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Ali\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2020-09-26T09:37:59.398Z] CLI Version:   8.11.2
+[debug] [2020-09-26T09:37:59.398Z] Platform:      win32
+[debug] [2020-09-26T09:37:59.398Z] Node Version:  v12.18.3
+[debug] [2020-09-26T09:37:59.399Z] Time:          Sat Sep 26 2020 13:07:59 GMT+0330 (Iran Standard Time)
+[debug] [2020-09-26T09:37:59.400Z] ----------------------------------------------------------------------
+[debug] [2020-09-26T09:37:59.400Z] 
+[debug] [2020-09-26T09:37:59.409Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-26T09:37:59.410Z] > authorizing via signed-in user
 [info] 
      ######## #### ########  ######## ########     ###     ######  ########
      ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
@@ -66,10 +19,6 @@ You're about to initialize a Firebase project in this directory:
 
   G:\Web Design\projectPractice\dictionary-react
 
-Before we get started, keep in mind:
-
-  * You are initializing in an existing Firebase project directory
-
 [info] 
 === Project Setup
 [info] 
@@ -77,10 +26,14 @@ Before we get started, keep in mind:
 [info] You can create multiple project aliases by running firebase use --add, 
 [info] but for now we'll just set up a default project.
 [info] 
-[debug] [2020-09-25T19:51:51.386Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects?pageSize=100  
+[debug] [2020-09-26T09:38:27.345Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-09-26T09:38:27.346Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-09-26T09:38:27.903Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 26 Sep 2020 09:38:26 GMT","server":"scaffolding on HTTPServer2","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-26T09:38:27.957Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects?pageSize=100  
  
-[debug] [2020-09-25T19:51:52.406Z] <<< HTTP RESPONSE 403 {"content-type":"text/html; charset=UTF-8","referrer-policy":"no-referrer","content-length":"1595","date":"Fri, 25 Sep 2020 19:51:51 GMT","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""}
-[debug] [2020-09-25T19:51:52.406Z] <<< HTTP RESPONSE BODY <!DOCTYPE html>
+[debug] [2020-09-26T09:38:28.455Z] <<< HTTP RESPONSE 403 {"content-type":"text/html; charset=UTF-8","referrer-policy":"no-referrer","content-length":"1595","date":"Sat, 26 Sep 2020 09:38:27 GMT","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""}
+[debug] [2020-09-26T09:38:28.455Z] <<< HTTP RESPONSE BODY <!DOCTYPE html>
 <html lang=en>
   <meta charset=utf-8>
   <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
@@ -92,8 +45,8 @@ Before we get started, keep in mind:
   <p><b>403.</b> <ins>That’s an error.</ins>
   <p>Your client does not have permission to get URL <code>/v1beta1/projects</code> from this server.  <ins>That’s all we know.</ins>
 
-[debug] [2020-09-25T19:51:52.408Z] HTTP Error: 403, Unknown Error
-[debug] [2020-09-25T19:51:53.872Z] FirebaseError: HTTP Error: 403, Unknown Error
+[debug] [2020-09-26T09:38:28.457Z] HTTP Error: 403, Unknown Error
+[debug] [2020-09-26T09:38:28.964Z] FirebaseError: HTTP Error: 403, Unknown Error
     at module.exports (C:\Users\Ali\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:38:12)
     at Request._callback (C:\Users\Ali\AppData\Roaming\npm\node_modules\firebase-tools\lib\api.js:41:35)
     at Request.self.callback (C:\Users\Ali\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:185:22)
